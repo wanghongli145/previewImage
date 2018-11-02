@@ -19,4 +19,14 @@ node app.js
 5. 点击旋转按钮旋转图片
 6. 点击下载按钮下载图片
 
+##### 方法使用
+在click的回调里执行 ```$selector.PreviewImg()```
+例：
+```
+$(function () {
+  $('.my-image').click(function () {
+    $(this).PreviewImg();
+  })
+});
+
 预览：http://localhost:1024
