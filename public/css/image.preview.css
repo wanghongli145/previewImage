@@ -1,0 +1,76 @@
+/* 图片预览css  */
+.m-image-preview{z-index: 999;width: 100%;height: 100%;position: fixed;top: 0px;left: 0px;}
+.m-image-preview .m-image-table{width: 100%;height: 100%;display: table;background-color: rgba(0,0,0,.3);}
+.m-image-preview .m-image-table-cell{vertical-align: middle;display: table-cell;}
+.m-image-preview .m-close{height:36px;width:25px;background:url(/images/preview-icon.png) no-repeat -97px center;float:right;cursor:pointer;}
+.m-image-preview .m-image-content {width: 600px;margin:auto;background-color:#fff;}
+
+.m-image-preview .m-operat{height:50px;background-color:#f9f9f9;text-align:center;}
+.m-image-preview .m-enlarge,
+.m-image-preview .m-narrow,
+.m-image-preview .m-rotate,
+.m-image-preview .m-download{display:inline-block;height:50px;width:23px;background:url(/images/preview-icon.png) no-repeat 0px center;margin-right: 20px;cursor:pointer;}
+.m-image-preview .m-narrow{background:url(/images/preview-icon.png) no-repeat -22px center;}
+.m-image-preview .m-rotate{background:url(/images/preview-icon.png) no-repeat -47px center;}
+.m-image-preview .m-download{background:url(/images/preview-icon.png) no-repeat -70px center;}
+
+.m-image-preview .m-image-detail{padding:10px;box-sizing: border-box;height: 600px;width:100%;display:table-cell;vertical-align: middle;}
+
+.g-table{display:table;width:100%;}
+.m-image-wrap{width:580px;height:600px;margin:auto;overflow:hidden;max-height: 600px;position:relative;line-height: 600px;text-align: center;}
+.m-image-preview .m-image-content img{margin:auto;min-width: 5px;cursor:move;position:relative;}
+
+.add-transform-360{
+  transform:rotate(360deg);
+  -ms-transform:rotate(360deg);
+  -moz-transform:rotate(360deg);
+  -webkit-transform:rotate(360deg);
+  -o-transform:rotate(360deg);
+  transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;
+}
+.add-transform-270{
+  transform:rotate(270deg);
+  -ms-transform:rotate(270deg);
+  -moz-transform:rotate(270deg);
+  -webkit-transform:rotate(270deg);
+  -o-transform:rotate(270deg);
+  transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;}
+.add-transform-180{
+  transform:rotate(180deg);
+  -ms-transform:rotate(180deg);
+  -moz-transform:rotate(180deg);
+  -webkit-transform:rotate(180deg);
+  -o-transform:rotate(180deg);
+  transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;}
+.add-transform-90{
+  transform:rotate(90deg);
+  -ms-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -webkit-transform:rotate(90deg);
+  -o-transform:rotate(90deg);
+  transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  -webkit-transition: all 0.5s ease-in-out;
+  -o-transition: all 0.5s ease-in-out;}
+.add-transform-0{
+  transform:rotate(0deg);
+  -ms-transform:rotate(0deg);
+  -moz-transform:rotate(0deg);
+  -webkit-transform:rotate(0deg);
+  -o-transform:rotate(0deg);
+}
+/*高宽分别对应横竖滚动条的尺寸*/
+ /* .m-image-wrap::-webkit-scrollbar {width: 10px;height: 10px;}  */
+/*滚动条里面小方块*/
+ /* .m-image-wrap::-webkit-scrollbar-thumb {border-radius: 10px;-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.2);background: #d1d1d1;}  */
+/*滚动条里面轨道*/
+ /* .m-image-wrap::-webkit-scrollbar-track {-webkit-box-shadow: inset 0 0 5px rgba(0,0,0,0.3);border-radius: 10px;background: #EDEDED;}  */
