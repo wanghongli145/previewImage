@@ -28,5 +28,5 @@ $(function () {
     $(this).PreviewImg();
   })
 });
-
+```
 预览：http://localhost:1024
