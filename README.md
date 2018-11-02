@@ -2,10 +2,7 @@
 Preview image
 
 效果图： 
-![Image text](https://github.com/wanghongli145/previewImage/raw/master/public/images/GIF.gif)
-![Image text](https://github.com/wanghongli145/previewImage/public/images/GIF.gif)
-![Image text]
-/public/images/GIF.jif
+![效果图](https://github.com/wanghongli145/previewImage/raw/master/public/images/GIF.gif)
 ```
 bower install
 
