@@ -1,5 +1,6 @@
 # previewImage
 Preview image
+预览地址：http://wanghongli.top:1024/
 ```
 cnpm install (npm install)
 node app.js
