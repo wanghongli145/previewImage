@@ -1,10 +1,7 @@
 # previewImage
 Preview image
 ```
-bower install
-
 cnpm install (npm install)
-
 node app.js
 ```
 
