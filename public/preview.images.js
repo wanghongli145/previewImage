@@ -5,6 +5,10 @@
       isEnlargeNew: true,
       rotate: 90,
       topDistance: 0,
+      currentIndex: 0,
+      imageArr: [],
+      next: false, // 下一张图片的按钮
+      prev: false, // 上一张图片的按钮
       src: '/images/icon2.png'
     }, options || {});
     this.init();
@@ -13,11 +17,38 @@
     init: function () {
       this.settings.isNew = true;
       this.draw();
-      this.settings.topDistance = $(window).scrollTop();
-      $('body').css({
-        'position': 'fixed'
-      });
-      $('.m-image-wrap img').attr('src', this.settings.src);
+      if (this.settings.imageArr.length > 1) {
+        this.imageArr = this.settings.imageArr;
+        // 0 -- imageArr.length -1
+        this.currentIndex = this.imageArr.indexOf(this.settings.src);
+        if (this.currentIndex > 0) {
+          this.prev = true;
+          if (this.currentIndex < this.imageArr.length - 1) {
+            this.next = true;
+          } else if (this.currentIndex === this.imageArr.length - 1) {
+            this.next = false;
+          } else {
+            this.next = false;
+          }
+        } else if (this.currentIndex === 0) {
+          this.next = true;
+          this.prev = false;
+        } else {
+          this.prev = false;
+        }
+      } else {
+        this.next = false;
+        this.prev = false;
+      }
+      this.showButton();
+      this.topDistance = $(window).scrollTop();
+      $('body').css({ 'position': 'fixed' });
+      if (this.settings.src) {
+        $('.m-image-wrap img').attr('src', this.settings.src).css({ 'max-width': '98%' });
+      } else {
+        $('.m-image-wrap img').attr('src', this.src);
+      }
+      if (this.settings.rotate) { this.rotate = parseInt(this.settings.rotate) }
       var self = this;
       $('.m-enlarge').click(function () {
         self.enlarge();
@@ -34,11 +65,15 @@
       $('.m-image-preview .m-close').click(function () {
         self.close();
       });
+      $('.m-preview-next-btn').click(function () {
+        self.showNextImage();
+      });
+      $('.m-preview-prev-btn').click(function () {
+        self.showPrevImage();
+      });
       this.dragImage($('.m-image-preview img')[0]);
-      $('.m-image-preview img').on('mousewheel', function (e) {
-        var delta = (e.originalEvent.wheelDelta && (e.originalEvent.wheelDelta > 0 ? 1 : -1)) ||  // chrome & ie
-          (e.originalEvent.detail && (e.originalEvent.detail > 0 ? -1 : 1)); // firefox
-        if (delta > 0) {
+      $('.m-image-preview img').on('mousewheel', function (event) {
+        if (event.originalEvent.deltaY < 0) {
           self.enlarge();
         } else {
           self.narrow();
@@ -66,6 +101,10 @@
       }
     },
     draw: function () {
+      var isIE = (this.myBrowser() === 'IE' || this.myBrowser() === 'Edge') ? true : false;
+      var hasDownloadHtml = isIE ? '' : '<span class="m-download"></span>';
+      var rigthHtml = '<div class="m-preview-next-btn"></div>';
+      var lefthHtml = '<div class="m-preview-prev-btn"></div>';
       var html = '<div class="m-image-preview">' +
         '<div class="m-image-table">' +
         '<div class="m-image-table-cell">' +
@@ -76,7 +115,7 @@
         '<div class="g-table">' +
         '<div class="m-image-detail">' +
         '<div class="m-image-wrap">' +
-        '<img src="/images/coinbg.png">' +
+        '<img src="">' +
         '</div>' +
         '</div>' +
         '</div>' +
@@ -84,13 +123,13 @@
         '<span class="m-enlarge"></span>' +
         '<span class="m-narrow"></span>' +
         '<span class="m-rotate"></span>' +
-        '<span class="m-download"></span>' +
-        '</div>' +
+        hasDownloadHtml +
+        '</div>' + rigthHtml + lefthHtml +
         '</div>' +
         '</div>' +
         '</div>' +
         '</div>';
-      $(document.body).append(html);
+      $('body').append(html);
     },
     close: function () {
       $('.m-image-preview').remove();
@@ -151,16 +190,83 @@
         }
       }
       xhr.send();
+    },
+    showButton: function () {
+      if (this.next) {
+        $('.m-preview-next-btn').show();
+      } else {
+        $('.m-preview-next-btn').hide();
+      }
+      if (this.prev) {
+        $('.m-preview-prev-btn').show();
+      } else {
+        $('.m-preview-prev-btn').hide();
+      }
+    },
+    myBrowser: function () {
+      var userAgent = navigator.userAgent; //取得浏览器的userAgent字符串
+      var isOpera = userAgent.indexOf('Opera') > -1;
+      if (isOpera) {
+        return 'Opera'
+      }; //判断是否Opera浏览器
+      if (userAgent.indexOf('compatible') > -1 && userAgent.indexOf('MSIE') > -1 && !isOpera) {
+        return 'IE';
+      }; //判断是否IE浏览器
+      if (userAgent.indexOf('Trident') > -1) {
+        return 'Edge';
+      } //判断是否Edge浏览器
+    },
+    showNextImage: function () {
+      this.currentIndex++;
+      if (this.currentIndex < this.imageArr.length - 1) {
+        this.next = true;
+        this.prev = true;
+        $('.m-image-wrap img').attr('src', this.imageArr[this.currentIndex]);
+      } else if (this.currentIndex == this.imageArr.length - 1) {
+        $('.m-image-wrap img').attr('src', this.imageArr[this.currentIndex]);
+        this.next = false;
+        this.prev = true;
+      } else {
+        this.next = false;
+        this.prev = false;
+      }
+      this.showButton();
+    },
+    showPrevImage: function () {
+      this.currentIndex--;
+      if (this.currentIndex < 0) {
+        this.prev = false;
+      } else if (this.currentIndex === 0) {
+        $('.m-image-wrap img').attr('src', this.imageArr[this.currentIndex]);
+        this.prev = false;
+        if (this.currentIndex < this.imageArr.length - 1) {
+          this.next = true;
+        }
+      } else {
+        $('.m-image-wrap img').attr('src', this.imageArr[this.currentIndex]);
+        this.next = true;
+        this.prev = true;
+      }
+      this.showButton();
     }
   };
   $.fn.PreviewImg = function (options) {
-    new PreviewImage({ src: $(this).attr('src') });
+    new PreviewImage(options);
   }
 })(jQuery);
 
 // 图片元素点击执行
 $(function () {
-  $('.my-image').click(function () {
-    $(this).PreviewImg();
-  })
+  $('body').delegate('.preview-obj img', 'click', function () {
+    var imageArr = [];
+    if ($(this).parents('.preview-obj').find('img').length > 1) {
+      $(this).parents('.preview-obj').find('img').each(function (i, v) {
+        imageArr.push($(v).attr('src'))
+      });
+    }
+    $(this).PreviewImg({
+      src: $(this).attr('src'), // 所有者链接
+      imageArr: imageArr
+    });
+  });
 });
